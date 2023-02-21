@@ -12,9 +12,14 @@ import time
 
 def usage(info):
     print()
-    print("Usage: {}".format(info))
+    print("################################################################################")
+    print("### Usage: {}".format(info))
+    print("################################################################################")
     print()
     print("{} [-t|--tibber TIBBER_BEARER] [-c|--tibber-notification-copy TIBBER_BEARER] [-n|--tibber-notification TIBBER_BEARER] [-f'|--file BEARER_FILE] [-s|--slack SKACK_HOOK] [-i|--show_info]".format(sys.argv[0]))
+    print()
+    print("crontab example: ")
+    print("37 13 * * * cd <PATH_TO_SCRIPT>; ./tibber_savings.py -t <TIBBER_BEARER> ./tibber.log 2>&1")
     exit()
 
 ################################################################################################################################################################
@@ -88,12 +93,15 @@ def tibber_get_data(bearer, request):
 ################################################################################################################################################################
 
 if tibber_file != "":
-    my_file = open(tibber_file, 'r')
-    tibber_bearers_raw = my_file.readlines()
-    my_file.close()
+    try:
+        my_file = open(tibber_file, 'r')
+        tibber_bearers_raw = my_file.readlines()
+        my_file.close()
+    except:
+        usage("Could not open file '{}'".format(tibber_file))
 
 for file_line in tibber_bearers_raw:
-    if file_line[0:1] == "#" or len(file_line) < 43:
+    if file_line[0:1] == "#" or len(file_line) != 43:
         continue
     file_arr = file_line.strip().split()
     #print(file_arr)
@@ -123,7 +131,7 @@ if show_info == True:
     usage("Exit after showing info")
 
 if len(tibber_bearers) == 0:
-    usage("No Tibber bearer found!")
+    usage("No valid Tibber bearer found!")
 
 ################################################################################################################################################################
 ### Parse all bearers
@@ -139,6 +147,9 @@ for bearer_index in range(0, len(tibber_bearers)):
     print()
 
     tibber_response = tibber_get_data(tibber_bearers[bearer_index], "{ viewer { homes { address { address1 address2 address3 postalCode city country latitude longitude } currentSubscription { priceInfo { today { startsAt total } tomorrow { startsAt total } } } } }}")
+    if "Context creation failed: invalid token" in str(tibber_response):
+        usage("Invalid token");
+
     print("### Adresser ({} st)".format(len(tibber_response["data"]["viewer"]["homes"])))
     for home in tibber_response["data"]["viewer"]["homes"]:
         print(home["address"]["address1"])
@@ -246,13 +257,13 @@ for bearer_index in range(0, len(tibber_bearers)):
                     print("  Lowest", end='')
                     if (arr_prices[hour_index] <= arr_prices[hour_index + duration - 1]):
                         average_timestamp_info = "{}h starta kl. {} ({:.2f} kr/kWh)".format(
-                            str(duration), 
-                            str(datetime.datetime.strptime(average_timestamp_start, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%H:%M")), 
+                            str(duration),
+                            str(datetime.datetime.strptime(average_timestamp_start, "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%H:%M")),
                             average_lowest)
                     else:
                         average_timestamp_info = "{}h avsluta kl. {} ({:.2f} kr/kWh)".format(
-                            str(duration), 
-                            str(datetime.datetime.strptime(average_timestamp_end,   "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%H:%M")), 
+                            str(duration),
+                            str(datetime.datetime.strptime(average_timestamp_end,   "%Y-%m-%dT%H:%M:%S.%f%z").strftime("%H:%M")),
                             average_lowest)
                 else:
                     print("        ", end='')
