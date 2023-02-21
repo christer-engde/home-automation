@@ -1,0 +1,109 @@
+Det krävs något shell i botten. Typ CYGWIN eller BASH.
+Jag kör just nu i CYGWIN på en Windows-burk, kommer att flytta detta till Raspberry inom kort.
+
+
+
+Så här ser outputen ut från en körning med mitt token:
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+$ ./tibber_savings.py -t "TIBBER-TOKEN-123456789012345678901234567890"
+################################################################################
+### Handle arguments
+################################################################################
+Parameter (Tibber bearer)                    : 'TIBBER-TOKEN-123456789012345678901234567890'
+
+bearer_index               : '0'
+Period start               : '18:00'
+Period end                 : '10:00'
+Tibber bearer              : 'TIBBER-TOKEN-123456789012345678901234567890'
+Tibber bearer notification : ''
+Slack API hook             : 'None'
+
+Tibber response:
+{"data":{"viewer":{"homes":[{"address":{"address1":"Törnskatevägen 8","address2":null,"address3":null,"postalCode":"90651","city":"UMEÅ","country":"SE","latitude":"63.8421313","longitude":"20.3166278"},"currentSubscription":{"priceInfo":{"today":[{"startsAt":"2023-02-21T
+00:00:00.000+01:00","total":0.6998},{"startsAt":"2023-02-21T01:00:00.000+01:00","total":0.6698},{"startsAt":"2023-02-21T02:00:00.000+01:00","total":0.6698},{"startsAt":"2023-02-21T03:00:00.000+01:00","total":0.6949},{"startsAt":"2023-02-21T04:00:00.000+01:00","total":0.7
+325},{"startsAt":"2023-02-21T05:00:00.000+01:00","total":0.802},{"startsAt":"2023-02-21T06:00:00.000+01:00","total":0.9625},{"startsAt":"2023-02-21T07:00:00.000+01:00","total":1.4191},{"startsAt":"2023-02-21T08:00:00.000+01:00","total":1.4768},{"startsAt":"2023-02-21T09:
+00:00.000+01:00","total":1.4884},{"startsAt":"2023-02-21T10:00:00.000+01:00","total":1.4866},{"startsAt":"2023-02-21T11:00:00.000+01:00","total":1.4813},{"startsAt":"2023-02-21T12:00:00.000+01:00","total":1.4932},{"startsAt":"2023-02-21T13:00:00.000+01:00","total":1.509}
+,{"startsAt":"2023-02-21T14:00:00.000+01:00","total":1.574},{"startsAt":"2023-02-21T15:00:00.000+01:00","total":1.6663},{"startsAt":"2023-02-21T16:00:00.000+01:00","total":2.0517},{"startsAt":"2023-02-21T17:00:00.000+01:00","total":2.3569},{"startsAt":"2023-02-21T18:00:0
+0.000+01:00","total":2.5405},{"startsAt":"2023-02-21T19:00:00.000+01:00","total":2.5145},{"startsAt":"2023-02-21T20:00:00.000+01:00","total":2.3717},{"startsAt":"2023-02-21T21:00:00.000+01:00","total":2.2206},{"startsAt":"2023-02-21T22:00:00.000+01:00","total":1.6022},{"
+startsAt":"2023-02-21T23:00:00.000+01:00","total":1.4957}],"tomorrow":[{"startsAt":"2023-02-22T00:00:00.000+01:00","total":0.9954},{"startsAt":"2023-02-22T01:00:00.000+01:00","total":0.9462},{"startsAt":"2023-02-22T02:00:00.000+01:00","total":0.913},{"startsAt":"2023-02-
+22T03:00:00.000+01:00","total":0.8761},{"startsAt":"2023-02-22T04:00:00.000+01:00","total":0.8412},{"startsAt":"2023-02-22T05:00:00.000+01:00","total":0.8677},{"startsAt":"2023-02-22T06:00:00.000+01:00","total":0.9394},{"startsAt":"2023-02-22T07:00:00.000+01:00","total":
+0.8785},{"startsAt":"2023-02-22T08:00:00.000+01:00","total":0.8018},{"startsAt":"2023-02-22T09:00:00.000+01:00","total":0.7867},{"startsAt":"2023-02-22T10:00:00.000+01:00","total":0.7489},{"startsAt":"2023-02-22T11:00:00.000+01:00","total":0.7104},{"startsAt":"2023-02-22
+T12:00:00.000+01:00","total":0.6746},{"startsAt":"2023-02-22T13:00:00.000+01:00","total":0.652},{"startsAt":"2023-02-22T14:00:00.000+01:00","total":0.6377},{"startsAt":"2023-02-22T15:00:00.000+01:00","total":0.6179},{"startsAt":"2023-02-22T16:00:00.000+01:00","total":0.5
+997},{"startsAt":"2023-02-22T17:00:00.000+01:00","total":0.5752},{"startsAt":"2023-02-22T18:00:00.000+01:00","total":0.5771},{"startsAt":"2023-02-22T19:00:00.000+01:00","total":0.5475},{"startsAt":"2023-02-22T20:00:00.000+01:00","total":0.5429},{"startsAt":"2023-02-22T21
+:00:00.000+01:00","total":0.5286},{"startsAt":"2023-02-22T22:00:00.000+01:00","total":0.5142},{"startsAt":"2023-02-22T23:00:00.000+01:00","total":0.4732}]}}}]}}}
+
+### Adresser (1 st)
+Törnskatevägen 8
+
+################################################################################
+##### Handle data
+################################################################################
+Length of tomorrow: 24
+
+### Adress: Törnskatevägen 8, UMEÅ. Duration: 4. index: 18-31
+Index: 18  Timestamp: 2023-02-21T18:00:00.000+01:00  Hours prices: 18 ( 2.54) 19 ( 2.51) 20 ( 2.37) 21 ( 2.22)  Average:  2.41  Lowest  Highest
+Index: 19  Timestamp: 2023-02-21T19:00:00.000+01:00  Hours prices: 19 ( 2.51) 20 ( 2.37) 21 ( 2.22) 22 ( 1.60)  Average:  2.18  Lowest
+Index: 20  Timestamp: 2023-02-21T20:00:00.000+01:00  Hours prices: 20 ( 2.37) 21 ( 2.22) 22 ( 1.60) 23 ( 1.50)  Average:  1.92  Lowest
+Index: 21  Timestamp: 2023-02-21T21:00:00.000+01:00  Hours prices: 21 ( 2.22) 22 ( 1.60) 23 ( 1.50) 24 ( 1.00)  Average:  1.58  Lowest
+Index: 22  Timestamp: 2023-02-21T22:00:00.000+01:00  Hours prices: 22 ( 1.60) 23 ( 1.50) 24 ( 1.00) 25 ( 0.95)  Average:  1.26  Lowest
+Index: 23  Timestamp: 2023-02-21T23:00:00.000+01:00  Hours prices: 23 ( 1.50) 24 ( 1.00) 25 ( 0.95) 26 ( 0.91)  Average:  1.09  Lowest
+Index: 24  Timestamp: 2023-02-22T00:00:00.000+01:00  Hours prices: 24 ( 1.00) 25 ( 0.95) 26 ( 0.91) 27 ( 0.88)  Average:  0.93  Lowest
+Index: 25  Timestamp: 2023-02-22T01:00:00.000+01:00  Hours prices: 25 ( 0.95) 26 ( 0.91) 27 ( 0.88) 28 ( 0.84)  Average:  0.89  Lowest
+Index: 26  Timestamp: 2023-02-22T02:00:00.000+01:00  Hours prices: 26 ( 0.91) 27 ( 0.88) 28 ( 0.84) 29 ( 0.87)  Average:  0.87  Lowest
+Index: 27  Timestamp: 2023-02-22T03:00:00.000+01:00  Hours prices: 27 ( 0.88) 28 ( 0.84) 29 ( 0.87) 30 ( 0.94)  Average:  0.88
+Index: 28  Timestamp: 2023-02-22T04:00:00.000+01:00  Hours prices: 28 ( 0.84) 29 ( 0.87) 30 ( 0.94) 31 ( 0.88)  Average:  0.88
+Index: 29  Timestamp: 2023-02-22T05:00:00.000+01:00  Hours prices: 29 ( 0.87) 30 ( 0.94) 31 ( 0.88) 32 ( 0.80)  Average:  0.87  Lowest
+Index: 30  Timestamp: 2023-02-22T06:00:00.000+01:00  Hours prices: 30 ( 0.94) 31 ( 0.88) 32 ( 0.80) 33 ( 0.79)  Average:  0.85  Lowest
+Index: 31  Timestamp: 2023-02-22T07:00:00.000+01:00  Hours prices: 31 ( 0.88)
+Index: 32  Timestamp: 2023-02-22T08:00:00.000+01:00  Hours prices: 32 ( 0.80)
+Index: 33  Timestamp: 2023-02-22T09:00:00.000+01:00  Hours prices: 33 ( 0.79)
+Index: 34  Timestamp: 2023-02-22T10:00:00.000+01:00  Hours prices: 34 ( 0.75)
+Index: 35  Timestamp: 2023-02-22T11:00:00.000+01:00  Hours prices: 35 ( 0.71)
+Message: 4h avsluta kl. 10:00 (0.85 kr/kWh)
+
+### Adress: Törnskatevägen 8, UMEÅ. Duration: 3. index: 18-32
+Index: 18  Timestamp: 2023-02-21T18:00:00.000+01:00  Hours prices: 18 ( 2.54) 19 ( 2.51) 20 ( 2.37)  Average:  2.48  Lowest  Highest
+Index: 19  Timestamp: 2023-02-21T19:00:00.000+01:00  Hours prices: 19 ( 2.51) 20 ( 2.37) 21 ( 2.22)  Average:  2.37  Lowest
+Index: 20  Timestamp: 2023-02-21T20:00:00.000+01:00  Hours prices: 20 ( 2.37) 21 ( 2.22) 22 ( 1.60)  Average:  2.06  Lowest
+Index: 21  Timestamp: 2023-02-21T21:00:00.000+01:00  Hours prices: 21 ( 2.22) 22 ( 1.60) 23 ( 1.50)  Average:  1.77  Lowest
+Index: 22  Timestamp: 2023-02-21T22:00:00.000+01:00  Hours prices: 22 ( 1.60) 23 ( 1.50) 24 ( 1.00)  Average:  1.36  Lowest
+Index: 23  Timestamp: 2023-02-21T23:00:00.000+01:00  Hours prices: 23 ( 1.50) 24 ( 1.00) 25 ( 0.95)  Average:  1.15  Lowest
+Index: 24  Timestamp: 2023-02-22T00:00:00.000+01:00  Hours prices: 24 ( 1.00) 25 ( 0.95) 26 ( 0.91)  Average:  0.95  Lowest
+Index: 25  Timestamp: 2023-02-22T01:00:00.000+01:00  Hours prices: 25 ( 0.95) 26 ( 0.91) 27 ( 0.88)  Average:  0.91  Lowest
+Index: 26  Timestamp: 2023-02-22T02:00:00.000+01:00  Hours prices: 26 ( 0.91) 27 ( 0.88) 28 ( 0.84)  Average:  0.88  Lowest
+Index: 27  Timestamp: 2023-02-22T03:00:00.000+01:00  Hours prices: 27 ( 0.88) 28 ( 0.84) 29 ( 0.87)  Average:  0.86  Lowest
+Index: 28  Timestamp: 2023-02-22T04:00:00.000+01:00  Hours prices: 28 ( 0.84) 29 ( 0.87) 30 ( 0.94)  Average:  0.88
+Index: 29  Timestamp: 2023-02-22T05:00:00.000+01:00  Hours prices: 29 ( 0.87) 30 ( 0.94) 31 ( 0.88)  Average:  0.90
+Index: 30  Timestamp: 2023-02-22T06:00:00.000+01:00  Hours prices: 30 ( 0.94) 31 ( 0.88) 32 ( 0.80)  Average:  0.87
+Index: 31  Timestamp: 2023-02-22T07:00:00.000+01:00  Hours prices: 31 ( 0.88) 32 ( 0.80) 33 ( 0.79)  Average:  0.82  Lowest
+Index: 32  Timestamp: 2023-02-22T08:00:00.000+01:00  Hours prices: 32 ( 0.80)
+Index: 33  Timestamp: 2023-02-22T09:00:00.000+01:00  Hours prices: 33 ( 0.79)
+Index: 34  Timestamp: 2023-02-22T10:00:00.000+01:00  Hours prices: 34 ( 0.75)
+Index: 35  Timestamp: 2023-02-22T11:00:00.000+01:00  Hours prices: 35 ( 0.71)
+Message: 3h avsluta kl. 10:00 (0.82 kr/kWh)
+
+################################################################################
+### Message to post:
+################################################################################
+Adress: Törnskatevägen 8, UMEÅ
+
+4h avsluta kl. 10:00 (0.85 kr/kWh)
+Jmf kl. 18:00-22:00 (2.41 kr/kWh)
+Max kl. 18:00-22:00 (2.41 kr/kWh)
+
+3h avsluta kl. 10:00 (0.82 kr/kWh)
+Jmf kl. 18:00-21:00 (2.48 kr/kWh)
+Max kl. 18:00-21:00 (2.48 kr/kWh)
+
+################################################################################
+### Post to Tibber
+################################################################################
+Send notification to tibber receiver
+Tibber response:
+{"data":{"sendPushNotification":{"successful":true,"pushedToNumberOfDevices":1}}}
+
+Done!
+
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

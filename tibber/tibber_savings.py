@@ -18,8 +18,11 @@ def usage(info):
     print()
     print("{} [-t|--tibber TIBBER_BEARER] [-c|--tibber-notification-copy TIBBER_BEARER] [-n|--tibber-notification TIBBER_BEARER] [-f'|--file BEARER_FILE] [-s|--slack SKACK_HOOK] [-i|--show_info]".format(sys.argv[0]))
     print()
+    print("Example:")
+    print("{} -t TIBBER-TOKEN-123456789012345678901234567890".format(sys.argv[0]))
+    print()
     print("crontab example: ")
-    print("37 13 * * * cd <PATH_TO_SCRIPT>; ./tibber_savings.py -t <TIBBER_BEARER> ./tibber.log 2>&1")
+    print("37 13 * * * cd <PATH_TO_SCRIPT>; ./tibber_savings.py -t <TIBBER_BEARER> ./tibber_savings.log 2>&1")
     exit()
 
 ################################################################################################################################################################
@@ -85,7 +88,7 @@ def tibber_get_data(bearer, request):
     proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
     (out, err) = proc.communicate()
     proc.wait()
-    #print("Tibber response:\n{}".format(str(out, "utf-8")))
+    print("Tibber response:\n{}".format(str(out, "utf-8")))
     return(json.loads(out))
 
 ################################################################################################################################################################
@@ -100,19 +103,22 @@ if tibber_file != "":
     except:
         usage("Could not open file '{}'".format(tibber_file))
 
+# print("tibber_bearers_raw: {}".format(tibber_bearers_raw))
+
 for file_line in tibber_bearers_raw:
-    if file_line[0:1] == "#" or len(file_line) != 43:
+    if file_line[0:1] == "#" or len(file_line.strip()) < 43:
         continue
     file_arr = file_line.strip().split()
-    #print(file_arr)
-    #print("tibber_bearer : {}".format(file_arr[0]))
+    # print(file_arr)
+    # print("tibber_bearer : {}".format(file_arr[0]))
     tibber_bearers.append(file_arr[0])
     if len(file_arr) == 2:
         slack_token = file_arr[1]
-        #print("slack_token   : {}".format(slack_token))
+        # print("slack_token   : {}".format(slack_token))
         slack_hooks.append(slack_token)
     else:
         slack_hooks.append(None)
+    # print()
 
 ################################################################################################################################################################
 ### Get bearer info
@@ -314,18 +320,18 @@ for bearer_index in range(0, len(tibber_bearers)):
         tibber_message_to_post = message_to_post.replace("\n", "\\\\\\\\n")
         tibber_post = "mutation{ sendPushNotification(input: { title: \\\"" + tibber_title + "\\\", message: \\\"" + tibber_message_to_post + "\\\", screenToOpen: HOME }){successful pushedToNumberOfDevices}}"
 
-        if tibber_bearer_notification != "":
-            print("Send notification to notification receiver")
-            tibber_response = tibber_get_data(tibber_bearer_notification, tibber_post)
-        else:
+        # Sent notification to original OR notifixation receiver
+        if tibber_bearer_notification == "":
             print("Send notification to tibber receiver")
             tibber_response = tibber_get_data(tibber_bearers[bearer_index], tibber_post)
-        print("Response: {}". format(tibber_response))
+        else:
+            print("Send notification to notification receiver")
+            tibber_response = tibber_get_data(tibber_bearer_notification, tibber_post)
 
+        # Sent notification copy
         if tibber_bearer_notification_copy != "":
             tibber_response = tibber_get_data(tibber_bearer_notification_copy, tibber_post)
-            print("Response: {}". format(tibber_response))
-        print()
+
         time.sleep(1.0)
 
     ################################################################################################################################################################
@@ -353,8 +359,8 @@ for bearer_index in range(0, len(tibber_bearers)):
         proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
         (out, err) = proc.communicate()
         proc.wait()
-        print("program output:\n{}".format(str(out, "utf-8")))
+        print("Tibber response:\n{}\n".format(str(out, "utf-8")))
 
     ################################################################################################################################################################
 
-print("\nDone!")
+print("Done!")
