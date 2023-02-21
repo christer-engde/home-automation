@@ -1,6 +1,10 @@
 Det krävs något shell i botten. Typ CYGWIN eller BASH.
 Jag kör just nu i CYGWIN på en Windows-burk, kommer att flytta detta till Raspberry inom kort.
 
+Här finns det demo-token att köra på, i all fall för att hämta data:
+https://developer.tibber.com/explorer
+Demo-token: 5K4MVS-OjfWhK_4yrjOlFe1F6kJXPVf7eQYggo8ebAE
+
 ####################################################################################################
 
 Frågan jag skickar är:
